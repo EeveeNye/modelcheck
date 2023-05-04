@@ -1,1 +1,1 @@
-# modelcheck
+http://rteditor.battlehub.net/
