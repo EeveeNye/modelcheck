@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Battlehub.RTCommon;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Events;
 
 namespace Battlehub.RTHandles
 {
     public class RuntimeSceneInput : RuntimeSelectionInput
     {
         public KeyCode FocusKey = KeyCode.F;
+
         public KeyCode FocusActiveKey = KeyCode.LeftShift;
         public KeyCode SnapToGridKey = KeyCode.G;
         public KeyCode SnapToGridKey2 = KeyCode.LeftShift;
@@ -179,13 +182,17 @@ namespace Battlehub.RTHandles
 
         // 添加一个计时器以检测双击
         private float m_lastClickTime;
-        private const float doubleClickDelay = 0.25f;
+        private const float doubleClickDelay = 0.35f;
 
         // 添加一个布尔变量来跟踪当前透明状态
         private bool m_isTransparent = true;
 
         public KeyCode SpaceKey = KeyCode.Space;
         public KeyCode ToggleVisibilityKey = KeyCode.H;
+        public KeyCode ToggleNeighboringVisibilityKey = KeyCode.G;
+
+        // 添加一个计时器以检测 G 键的双击事件
+        private float m_lastGClickTime;
 
         protected override void LateUpdate()
         {
@@ -367,35 +374,124 @@ namespace Battlehub.RTHandles
                         {
                             if (Time.time - m_lastClickTime < doubleClickDelay)
                             {
+                                isFF = !isFF;
+                                isGG = true;
+
                                 // 双击时切换透明状态
-                                m_isTransparent = !m_isTransparent;
+                                m_isTransparent = isFF;
                                 SetTransparencyForAllModels(m_isTransparent);
                             }
 
                             m_lastClickTime = Time.time;
                         }
                     }
+
+                    if (ToggleNeighboringVisibilityAction())
+                    {
+                        if (Time.time - m_lastGClickTime < doubleClickDelay)
+                        {
+                            ToggleVisibilityOfNeighboringObjects();
+                        }
+
+                        m_lastGClickTime = Time.time;
+                    }
                 }
             }
         }
 
+        public bool isFF = true;
+        public bool isGG = true;
+
+
         // 新增一个方法来实现半透明和不透明之间的切换
         private void SetTransparencyForAllModels(bool isTransparent)
         {
-            GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>();
-            List<GameObject> selectedObjects = new List<GameObject>(SceneComponent.Selection.gameObjects);
-
-            foreach (GameObject obj in allObjects)
+            if (commonRoot == null)
             {
-                Renderer renderer = obj.GetComponent<Renderer>();
-                if (renderer != null && renderer.material != null)
+                // 获取当前选中物体的根物体
+                commonRoot = SceneComponent.Selection.activeTransform.root;
+
+                // 在根物体下查找所有的Renderer组件
+                renderers = commonRoot.GetComponentsInChildren<Renderer>();
+            }
+
+            List<GameObject> selectedObjects = new List<GameObject>(SceneComponent.Selection.gameObjects);
+            foreach (GameObject selectedObj in SceneComponent.Selection.gameObjects)
+            {
+                foreach (Renderer renderer in renderers)
                 {
-                    if (!selectedObjects.Contains(obj))
-                        renderer.enabled = isTransparent;
-                    else
-                        renderer.enabled = true;
+                    if (renderer != null && renderer.material != null)
+                    {
+                        if (renderer.gameObject == selectedObj)
+                            renderer.enabled = true;
+                        else
+                            renderer.enabled = isTransparent;
+
+                        if (renderer.GetComponent<MeshCollider>())
+                            renderer.GetComponent<MeshCollider>().enabled = renderer.enabled;
+                    }
                 }
             }
+        }
+
+        protected virtual bool ToggleNeighboringVisibilityAction()
+        {
+            IInput input = m_component.Editor.Input;
+            return input.GetKeyDown(ToggleNeighboringVisibilityKey);
+        }
+
+        private Transform commonRoot;
+        private Renderer[] renderers;
+
+        private void ToggleVisibilityOfNeighboringObjects()
+        {
+            if (SceneComponent.Selection.gameObjects != null)
+            {
+                if (SceneComponent.Selection.activeTransform != null &&
+                    SceneComponent.Selection.activeTransform.GetComponent<Terrain>() == null)
+                {
+                    SceneComponent.Focus(FocusMode.Selected);
+                }
+
+                if (commonRoot == null)
+                {
+                    // 获取当前选中物体的根物体
+                    commonRoot = SceneComponent.Selection.activeTransform.root;
+
+                    // 在根物体下查找所有的Renderer组件
+                    renderers = commonRoot.GetComponentsInChildren<Renderer>();
+                }
+
+                isGG = !isGG;
+                isFF = true;
+
+                foreach (GameObject selectedObj in SceneComponent.Selection.gameObjects)
+                {
+                    // 遍历所有的Renderer组件，切换显示和隐藏状态
+                    foreach (Renderer renderer in renderers)
+                    {
+                        if (renderer.gameObject == selectedObj)
+                            renderer.enabled = true;
+                        else if (!AreBoundsIntersecting(renderer, selectedObj.GetComponent<Renderer>()))
+                            renderer.enabled = isGG;
+                        else
+                            renderer.enabled = true;
+
+                        if (renderer.GetComponent<MeshCollider>())
+                            renderer.GetComponent<MeshCollider>().enabled = renderer.enabled;
+                    }
+                }
+            }
+        }
+
+        private bool AreBoundsIntersecting(Renderer renderer1, Renderer renderer2)
+        {
+            if (renderer1 != null && renderer2 != null)
+            {
+                return renderer1.bounds.Intersects(renderer2.bounds);
+            }
+
+            return false;
         }
 
 

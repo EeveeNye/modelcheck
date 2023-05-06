@@ -628,10 +628,10 @@ namespace Battlehub.RTEditor.ViewModels
         #region Context Menu
         protected override void OnContextMenu(List<MenuItemViewModel> menuItems)
         {
-            MenuItemViewModel createPrefab = new MenuItemViewModel { Path = Localization.GetString("ID_RTEditor_CreatePrefab", "Create Prefab") };
-            createPrefab.Action = CreatePrefabContextMenuCmd;
-            createPrefab.Validate = CreatePrefabValidateContextMenuCmd;
-            menuItems.Add(createPrefab);
+            // MenuItemViewModel createPrefab = new MenuItemViewModel { Path = Localization.GetString("ID_RTEditor_CreatePrefab", "Create Prefab") };
+            // createPrefab.Action = CreatePrefabContextMenuCmd;
+            // createPrefab.Validate = CreatePrefabValidateContextMenuCmd;
+            // menuItems.Add(createPrefab);
 
             MenuItemViewModel duplicate = new MenuItemViewModel { Path = Localization.GetString("ID_RTEditor_HierarchyViewImpl_Duplicate", "Duplicate") };
             duplicate.Action = DuplicateContextMenuCmd;

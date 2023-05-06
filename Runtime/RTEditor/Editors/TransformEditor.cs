@@ -25,6 +25,7 @@ namespace Battlehub.RTEditor
 
         private void StoreInitialTransforms()
         {
+            Debug.Log("StoreInitialTransforms");
             GameObject[] allGameObjects = GameObject.FindObjectsOfType<GameObject>();
             foreach (GameObject go in allGameObjects)
             {

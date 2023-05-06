@@ -59,7 +59,7 @@
         <!-- 帮助菜单 -->
         <StringResource id="ID_RTEditor_MenuHelp_Button" value="帮助"/>
         <StringResource id="MenuHelp" value="帮助"/>
-        <StringResource id="About RTE" value="关于 RTE"/>
+        <StringResource id="About RTE" value="关于"/>
 
         <!-- 窗口管理器 -->
         <StringResource id="ID_RTEditor_WM_Header_Scene" value="场景"/>
@@ -89,15 +89,15 @@
         <StringResource id="ID_RTEditor_ToolsPanel_Play" value="重新加载"/>
         <StringResource id="ID_RTEditor_ToolsPanel_Undo" value="撤销"/>
         <StringResource id="ID_RTEditor_ToolsPanel_Redo" value="重做"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_HandTool" value="抓手工具"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_MoveTool" value="移动工具"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_RotateTool" value="旋转工具"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_ScaleTool" value="缩放工具"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_RectTool" value="矩形工具"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_InGlobalRotation" value="工具句柄以全局旋转为基础。"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_InObjectsRotation" value="工具句柄以当前对象旋转为基础。"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_AtTheCenter" value="工具句柄位于选择对象中心。"/>
-        <StringResource id="ID_RTEditor_ToolsPanel_AtThePivotPoint" value="工具句柄位于当前对象枢轴点。"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_HandTool" value="抓手工具,快捷键:Q"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_MoveTool" value="移动工具,快捷键:W"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_RotateTool" value="旋转工具,快捷键:E"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_ScaleTool" value="缩放工具,快捷键:R"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_RectTool" value="矩形工具,快捷键:T"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_InGlobalRotation" value="关闭名称显示。"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_InObjectsRotation" value="开启名称显示。"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_AtTheCenter" value="关闭描边。"/>
+        <StringResource id="ID_RTEditor_ToolsPanel_AtThePivotPoint" value="开启描边。"/>
         <!-- 组件描述符 -->
         <StringResource id="ID_RTEditor_CD_AudioListener" value="音频监听器"/>
 

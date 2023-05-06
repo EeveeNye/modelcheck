@@ -12,7 +12,7 @@ namespace Battlehub.RTEditor
             get { return IOC.Resolve<IRuntimeEditor>(); }
         }
 
-        [MenuCommand("MenuEdit/Undo", validate:true)]
+        [MenuCommand("MenuEdit/Undo", validate: true)]
         public bool CanUndo()
         {
             return Editor.Undo.CanUndo;
@@ -44,6 +44,7 @@ namespace Battlehub.RTEditor
             {
                 return false;
             }
+
             ExposeToEditor exposeToEditor = activeGameObject.GetComponent<ExposeToEditor>();
             if (exposeToEditor != null && !exposeToEditor.CanDuplicate)
             {
@@ -67,11 +68,13 @@ namespace Battlehub.RTEditor
             {
                 return false;
             }
+
             ExposeToEditor exposeToEditor = activeGameObject.GetComponent<ExposeToEditor>();
             if (exposeToEditor != null && !exposeToEditor.CanDelete)
             {
                 return false;
             }
+
             return true;
         }
 
@@ -81,31 +84,31 @@ namespace Battlehub.RTEditor
             Editor.Delete(Editor.Selection.gameObjects);
         }
 
-        [MenuCommand("MenuEdit/Play", validate: true)]
-        public bool CanPlay()
-        {
-            return !Editor.IsPlaying;
-        }
+        // [MenuCommand("MenuEdit/Play", validate: true)]
+        // public bool CanPlay()
+        // {
+        //     return !Editor.IsPlaying;
+        // }
+        //
+        // [MenuCommand("MenuEdit/Play", priority: 50)]
+        // public void Play()
+        // {
+        //     Editor.IsPlaying = true;
+        // }
+        //
+        // [MenuCommand("MenuEdit/Stop", validate: true)]
+        // public bool CanStop()
+        // {
+        //     return Editor.IsPlaying;
+        // }
 
-        [MenuCommand("MenuEdit/Play", priority: 50)]
-        public void Play()
-        {
-            Editor.IsPlaying = true;
-        }
+        // [MenuCommand("MenuEdit/Stop", priority: 60)]
+        // public void Stop()
+        // {
+        //     Editor.IsPlaying = false;
+        // }
 
-        [MenuCommand("MenuEdit/Stop", validate: true)]
-        public bool CanStop()
-        {
-            return Editor.IsPlaying;
-        }
-
-        [MenuCommand("MenuEdit/Stop", priority: 60)]
-        public void Stop()
-        {
-            Editor.IsPlaying = false;
-        }
-
-        [MenuCommand("MenuEdit/Settings", validate:true)]
+        [MenuCommand("MenuEdit/Settings", validate: true)]
         public bool CanShowSettings()
         {
             return true;

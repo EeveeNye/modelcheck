@@ -61,7 +61,7 @@ namespace Battlehub.RTEditor.ViewModels
             get { return Editor.Tools.Current == RuntimeTool.Scale; }
             set
             {
-                if(value)
+                if (value)
                 {
                     Editor.Tools.Current = RuntimeTool.Scale;
                 }
@@ -76,7 +76,7 @@ namespace Battlehub.RTEditor.ViewModels
             get { return Editor.Tools.Current == RuntimeTool.Rect; }
             set
             {
-                if(value)
+                if (value)
                 {
                     Editor.Tools.Current = RuntimeTool.Rect;
                 }
@@ -89,9 +89,10 @@ namespace Battlehub.RTEditor.ViewModels
         public virtual bool IsPivotRotation
         {
             get { return Editor.Tools.PivotRotation == RuntimePivotRotation.Global; }
-            set 
+            set
             {
                 Editor.Tools.PivotRotation = value ? RuntimePivotRotation.Global : RuntimePivotRotation.Local;
+
                 RaisePropertyChanged(nameof(IsPivotRotation));
             }
         }
@@ -100,8 +101,8 @@ namespace Battlehub.RTEditor.ViewModels
         public virtual bool IsPivotMode
         {
             get { return Editor.Tools.PivotMode == RuntimePivotMode.Center; }
-            set 
-            { 
+            set
+            {
                 Editor.Tools.PivotMode = value ? RuntimePivotMode.Center : RuntimePivotMode.Pivot;
                 RaisePropertyChanged(nameof(IsPivotMode));
             }
@@ -111,14 +112,14 @@ namespace Battlehub.RTEditor.ViewModels
         public virtual bool IsPlay
         {
             get { return Editor.IsPlaying; }
-            set 
+            set
             {
                 Editor.IsPlaying = value;
                 RaisePropertyChanged(nameof(IsPlay));
             }
         }
 
-        
+
         [Binding]
         public virtual bool IsUndoInteractable
         {
@@ -206,7 +207,7 @@ namespace Battlehub.RTEditor.ViewModels
 
         protected virtual void OnPlaymodeStateChanged()
         {
-            RaisePropertyChanged(nameof(IsPlay));   
+            RaisePropertyChanged(nameof(IsPlay));
         }
 
         protected virtual void OnRuntimeToolChanged()
@@ -238,6 +239,5 @@ namespace Battlehub.RTEditor.ViewModels
         {
             UpdateUndoRedoButtonsState();
         }
-
     }
 }

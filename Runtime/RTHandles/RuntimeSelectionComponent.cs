@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Battlehub.Utils;
 using Battlehub.RTCommon;
 using System;
-
 using UnityObject = UnityEngine.Object;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,38 +19,19 @@ namespace Battlehub.RTHandles
 
     public interface IScenePivot
     {
-        Vector3 Pivot
-        {
-            get;
-            set;
-        }
+        Vector3 Pivot { get; set; }
 
-        Vector3 SecondaryPivot
-        {
-            get;
-            set;
-        }
+        Vector3 SecondaryPivot { get; set; }
 
-        Vector3 CameraPosition
-        {
-            get;
-            set;
-        }
+        Vector3 CameraPosition { get; set; }
 
-        bool IsOrthographic
-        {
-            get;
-            set;
-        }
+        bool IsOrthographic { get; set; }
 
-        float OrthographicSize
-        {
-            get;
-            set;
-        }
+        float OrthographicSize { get; set; }
 
         [Obsolete]
         void Focus();
+
         void Focus(FocusMode mode = FocusMode.Default);
         void Focus(Vector3 objPosition, float objSize);
         void SetCameraPositionAndPivot(Vector3 position, Vector3 pivot);
@@ -59,17 +39,9 @@ namespace Battlehub.RTHandles
 
     public class RuntimeSelectionChangingArgs : EventArgs
     {
-        public bool Cancel
-        {
-            get;
-            set;
-        }
+        public bool Cancel { get; set; }
 
-        public IList<UnityObject> Selected
-        {
-            get;
-            private set;
-        }
+        public IList<UnityObject> Selected { get; private set; }
 
         public RuntimeSelectionChangingArgs(IEnumerable<UnityObject> selected)
         {
@@ -79,11 +51,7 @@ namespace Battlehub.RTHandles
 
     public class RuntimeSelectionFilteringArgs : EventArgs
     {
-        public IList<RaycastHit> Hits
-        {
-            get;
-            private set;
-        }
+        public IList<RaycastHit> Hits { get; private set; }
 
         public RuntimeSelectionFilteringArgs(IEnumerable<RaycastHit> hits)
         {
@@ -97,119 +65,45 @@ namespace Battlehub.RTHandles
         event EventHandler<RuntimeSelectionChangingArgs> SelectionChanging;
         event EventHandler SelectionChanged;
 
-        PositionHandle PositionHandle
-        {
-            get;
-        }
+        PositionHandle PositionHandle { get; }
 
-        RotationHandle RotationHandle
-        {
-            get;
-        }
+        RotationHandle RotationHandle { get; }
 
-        ScaleHandle ScaleHandle
-        {
-            get;
-        }
+        ScaleHandle ScaleHandle { get; }
 
-        RectTool RectTool
-        {
-            get;
-        }
+        RectTool RectTool { get; }
 
-        BaseHandle CustomHandle
-        {
-            get;
-            set;
-        }
+        BaseHandle CustomHandle { get; set; }
 
-        BoxSelection BoxSelection
-        {
-            get;
-        }
+        BoxSelection BoxSelection { get; }
 
-        bool IsPositionHandleEnabled
-        {
-            get;
-            set;
-        }
+        bool IsPositionHandleEnabled { get; set; }
 
-        bool IsRotationHandleEnabled
-        {
-            get;
-            set;
-        }
+        bool IsRotationHandleEnabled { get; set; }
 
-        bool IsScaleHandleEnabled
-        {
-            get;
-            set;
-        }
+        bool IsScaleHandleEnabled { get; set; }
 
-        bool IsRectToolEnabled
-        {
-            get;
-            set;
-        }
+        bool IsRectToolEnabled { get; set; }
 
-        bool IsBoxSelectionEnabled
-        {
-            get;
-            set;
-        }
+        bool IsBoxSelectionEnabled { get; set; }
 
-        bool IsSelectionVisible
-        {
-            get;
-            set;
-        }
+        bool IsSelectionVisible { get; set; }
 
-        bool CanSelect
-        {
-            get;
-            set;
-        }
+        bool CanSelect { get; set; }
 
-        bool CanSelectAll
-        {
-            get;
-            set;
-        }
+        bool CanSelectAll { get; set; }
 
-        float SizeOfGrid
-        {
-            get;
-            set;
-        }
+        float SizeOfGrid { get; set; }
 
-        bool IsGridVisible
-        {
-            get;
-            set;
-        }
+        bool IsGridVisible { get; set; }
 
-        bool IsGridEnabled
-        {
-            get;
-            set;
-        }
+        bool IsGridEnabled { get; set; }
 
-        bool GridZTest
-        {
-            get;
-            set;
-        }
+        bool GridZTest { get; set; }
 
-        RuntimeWindow Window
-        {
-            get;
-        }
+        RuntimeWindow Window { get; }
 
-        IRuntimeSelection Selection
-        {
-            get;
-            set;
-        }
+        IRuntimeSelection Selection { get; set; }
 
         Transform[] GetHandleTargets();
     }
@@ -221,55 +115,49 @@ namespace Battlehub.RTHandles
         public event EventHandler<RuntimeSelectionChangingArgs> SelectionChanging;
         public event EventHandler SelectionChanged;
 
-        [SerializeField]
-        private OutlineManager m_outlineManager = null;
-        [SerializeField]
-        private PositionHandle m_positionHandle = null;
-        [SerializeField]
-        private RotationHandle m_rotationHandle = null;
-        [SerializeField]
-        private ScaleHandle m_scaleHandle = null;
-        [SerializeField]
-        private RectTool m_rectTool = null;
-        [SerializeField]
-        private BaseHandle m_customHandle = null;
-        [SerializeField]
-        private BoxSelection m_boxSelection = null;
-        [SerializeField]
-        private SceneGrid m_grid = null;
-        [SerializeField]
-        private Transform m_pivot = null;
-        [SerializeField]
-        private Transform m_secondaryPivot = null;
+        [SerializeField] private OutlineManager m_outlineManager = null;
+        [SerializeField] private PositionHandle m_positionHandle = null;
+        [SerializeField] private RotationHandle m_rotationHandle = null;
+        [SerializeField] private ScaleHandle m_scaleHandle = null;
+        [SerializeField] private RectTool m_rectTool = null;
+        [SerializeField] private BaseHandle m_customHandle = null;
+        [SerializeField] private BoxSelection m_boxSelection = null;
+        [SerializeField] private SceneGrid m_grid = null;
+        [SerializeField] private Transform m_pivot = null;
+
+        [SerializeField] private Transform m_secondaryPivot = null;
+
         //[SerializeField]
         private bool m_isPositionHandleEnabled = true;
+
         //[SerializeField]
         private bool m_isRotationHandleEnabled = true;
+
         //[SerializeField]
         private bool m_isScaleHandleEnabled = true;
+
         //[SerializeField]
         private bool m_isRectToolEnabled = true;
+
         //[SerializeField]
         private bool m_isBoxSelectionEnabled = true;
+
         //[SerializeField]
         private bool m_isSelectionVisible = true;
-        [SerializeField]
-        private bool m_canSelect = true;
-        [SerializeField]
-        private bool m_canSelectAll = true;
-        [SerializeField]
-        private bool m_canSelectExposedOnly = true;
+        [SerializeField] private bool m_canSelect = true;
+        [SerializeField] private bool m_canSelectAll = true;
+        [SerializeField] private bool m_canSelectExposedOnly = true;
 
         private SelectionPicker m_selectionPicker;
+
         private enum SelectionMode
         {
-            UseColliders, 
+            UseColliders,
             UseRenderers, //issues with static objects + impossible to select terrain
             UseRenderersBeforeColliders,
         }
 
-        [SerializeField]
-        private SelectionMode m_selectionMode = SelectionMode.UseColliders;
+        [SerializeField] private SelectionMode m_selectionMode = SelectionMode.UseColliders;
 
         protected Transform PivotTransform
         {
@@ -378,12 +266,14 @@ namespace Battlehub.RTHandles
                     {
                         m_customHandle.BeforeDrag = new BaseHandleUnityEvent();
                     }
+
                     m_customHandle.BeforeDrag.AddListener(OnBeforeDrag);
 
                     if (m_customHandle.Drop == null)
                     {
                         m_customHandle.Drop = new BaseHandleUnityEvent();
                     }
+
                     m_customHandle.Drop.AddListener(OnDrop);
 
                     if (Editor.Tools.Current == RuntimeTool.Custom)
@@ -420,7 +310,9 @@ namespace Battlehub.RTHandles
                     {
                         m_positionHandle.Targets = GetHandleTargets();
                     }
-                    m_positionHandle.gameObject.SetActive(value && Editor.Tools.Current == RuntimeTool.Move && m_positionHandle.Target != null);
+
+                    m_positionHandle.gameObject.SetActive(value && Editor.Tools.Current == RuntimeTool.Move &&
+                                                          m_positionHandle.Target != null);
                 }
             }
         }
@@ -437,7 +329,9 @@ namespace Battlehub.RTHandles
                     {
                         m_rotationHandle.Targets = GetHandleTargets();
                     }
-                    m_rotationHandle.gameObject.SetActive(value && Editor.Tools.Current == RuntimeTool.Rotate && m_rotationHandle.Target != null);
+
+                    m_rotationHandle.gameObject.SetActive(value && Editor.Tools.Current == RuntimeTool.Rotate &&
+                                                          m_rotationHandle.Target != null);
                 }
             }
         }
@@ -454,7 +348,9 @@ namespace Battlehub.RTHandles
                     {
                         m_scaleHandle.Targets = GetHandleTargets();
                     }
-                    m_scaleHandle.gameObject.SetActive(value && Editor.Tools.Current == RuntimeTool.Scale && m_scaleHandle.Target != null);
+
+                    m_scaleHandle.gameObject.SetActive(value && Editor.Tools.Current == RuntimeTool.Scale &&
+                                                       m_scaleHandle.Target != null);
                 }
             }
         }
@@ -471,7 +367,9 @@ namespace Battlehub.RTHandles
                     {
                         m_rectTool.Targets = GetHandleTargets();
                     }
-                    m_rectTool.gameObject.SetActive(value && Editor.Tools.Current == RuntimeTool.Rect && m_rectTool.Target != null);
+
+                    m_rectTool.gameObject.SetActive(value && Editor.Tools.Current == RuntimeTool.Rect &&
+                                                    m_rectTool.Target != null);
                 }
             }
         }
@@ -508,6 +406,7 @@ namespace Battlehub.RTHandles
         }
 
         private bool m_isGridVisible = true;
+
         public bool IsGridVisible
         {
             get { return m_isGridVisible; }
@@ -530,6 +429,7 @@ namespace Battlehub.RTHandles
         }
 
         private bool m_isGridEnabled;
+
         public bool IsGridEnabled
         {
             get { return m_isGridEnabled; }
@@ -562,6 +462,7 @@ namespace Battlehub.RTHandles
         }
 
         private bool m_gridZTest = true;
+
         public bool GridZTest
         {
             get { return m_gridZTest; }
@@ -591,6 +492,7 @@ namespace Battlehub.RTHandles
                 {
                     return 0.5f;
                 }
+
                 return m_grid.SizeOfGrid;
             }
             set
@@ -629,6 +531,7 @@ namespace Battlehub.RTHandles
         }
 
         private IRuntimeSelection m_selectionOverride;
+
         public IRuntimeSelection Selection
         {
             get
@@ -672,7 +575,7 @@ namespace Battlehub.RTHandles
         protected override void Awake()
         {
             base.Awake();
-        
+
             Window.IOCContainer.RegisterFallback<IScenePivot>(this);
             Window.IOCContainer.RegisterFallback<IRuntimeSelectionComponent>(this);
 
@@ -695,20 +598,23 @@ namespace Battlehub.RTHandles
             if (m_positionHandle == null)
             {
                 m_positionHandle = GetComponentInChildren<PositionHandle>(true);
-
             }
+
             if (m_rotationHandle == null)
             {
                 m_rotationHandle = GetComponentInChildren<RotationHandle>(true);
             }
+
             if (m_scaleHandle == null)
             {
                 m_scaleHandle = GetComponentInChildren<ScaleHandle>(true);
             }
+
             if (m_rectTool == null)
             {
                 m_rectTool = GetComponentInChildren<RectTool>(true);
             }
+
             if (m_grid == null)
             {
                 m_grid = GetComponentInChildren<SceneGrid>(true);
@@ -759,6 +665,7 @@ namespace Battlehub.RTHandles
                 {
                     m_scaleHandle.Window = Window;
                 }
+
                 m_scaleHandle.gameObject.SetActive(true);
                 m_scaleHandle.gameObject.SetActive(false);
 
@@ -772,6 +679,7 @@ namespace Battlehub.RTHandles
                 {
                     m_rectTool.Window = Window;
                 }
+
                 m_rectTool.gameObject.SetActive(true);
                 m_rectTool.gameObject.SetActive(false);
 
@@ -822,7 +730,7 @@ namespace Battlehub.RTHandles
             }
 
             base.Start();
-                   
+
             if (m_positionHandle != null && !m_positionHandle.gameObject.activeSelf)
             {
                 m_positionHandle.gameObject.SetActive(true);
@@ -851,7 +759,7 @@ namespace Battlehub.RTHandles
         protected override void OnDestroy()
         {
             base.OnDestroy();
-        
+
             Window.IOCContainer.UnregisterFallback<IScenePivot>(this);
             Window.IOCContainer.UnregisterFallback<IRuntimeSelectionComponent>(this);
 
@@ -908,16 +816,18 @@ namespace Battlehub.RTHandles
 
         protected virtual IEnumerable<BaseRaycaster> FindRaycasters()
         {
-            return FindObjectsOfType<BaseRaycaster>().Where(raycaster => raycaster.GetComponentInParent<IRTE>() == null);
+            return FindObjectsOfType<BaseRaycaster>()
+                .Where(raycaster => raycaster.GetComponentInParent<IRTE>() == null);
         }
 
         protected readonly List<RaycastResult> m_uiRaycastResults = new List<RaycastResult>();
+
         protected virtual IList<RaycastResult> RaycastUIObjects()
         {
             m_uiRaycastResults.Clear();
 
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            
+
             foreach (BaseRaycaster raycaster in FindRaycasters())
             {
                 Camera canvasCamera;
@@ -940,7 +850,6 @@ namespace Battlehub.RTHandles
                     pointerData.position = Window.Pointer.ScreenPoint;
                     raycaster.Raycast(pointerData, m_uiRaycastResults);
                     graphicRaycaster.blockingObjects = blockingObjects;
-
                 }
                 else
                 {
@@ -949,24 +858,25 @@ namespace Battlehub.RTHandles
 
                 canvas.worldCamera = canvasCamera;
             }
-                        
+
             m_uiRaycastResults.Sort(RaycastComparer);
             return m_uiRaycastResults;
         }
 
         protected HashSet<GameObject> m_uiBoxcastResults = new HashSet<GameObject>();
+
         protected virtual IEnumerable<GameObject> BoxcastUIObjects()
         {
             m_uiBoxcastResults.Clear();
 
             Bounds bounds = m_boxSelection.SelectionBounds;
-            
+
             Vector3[] corners = new Vector3[4];
             foreach (BaseRaycaster raycaster in FindRaycasters())
             {
                 CanvasRenderer[] renderers = raycaster.GetComponentsInChildren<CanvasRenderer>();
 
-                for(int i = 0; i < renderers.Length; ++i)
+                for (int i = 0; i < renderers.Length; ++i)
                 {
                     CanvasRenderer renderer = renderers[i];
                     RectTransform rectTransform = (RectTransform)renderer.transform;
@@ -981,17 +891,18 @@ namespace Battlehub.RTHandles
                             if (CanSelectObject(renderer.gameObject))
                             {
                                 ExposeToEditor exposeToEditor = renderer.GetComponentInParent<ExposeToEditor>();
-                                if(exposeToEditor != null)
+                                if (exposeToEditor != null)
                                 {
                                     m_uiBoxcastResults.Add(exposeToEditor.gameObject);
                                 }
                             }
+
                             break;
                         }
                     }
                 }
-
             }
+
             return m_uiBoxcastResults;
         }
 
@@ -999,7 +910,8 @@ namespace Battlehub.RTHandles
         {
             if (lhs.module != rhs.module)
             {
-                if (lhs.module.eventCamera != null && rhs.module.eventCamera != null && lhs.module.eventCamera.depth != rhs.module.eventCamera.depth)
+                if (lhs.module.eventCamera != null && rhs.module.eventCamera != null &&
+                    lhs.module.eventCamera.depth != rhs.module.eventCamera.depth)
                 {
                     // need to reverse the standard compareTo
                     if (lhs.module.eventCamera.depth < rhs.module.eventCamera.depth)
@@ -1041,13 +953,15 @@ namespace Battlehub.RTHandles
         protected virtual RaycastHit[] Raycast3DObjects()
         {
             RaycastHit[] hits = Physics.RaycastAll(Window.Pointer, float.MaxValue);
-            return hits.Where(hit => CanSelectObject(hit.collider.gameObject)).OrderBy(hit => GetDepth(hit.transform)).ToArray();
+            return hits.Where(hit => CanSelectObject(hit.collider.gameObject)).OrderBy(hit => GetDepth(hit.transform))
+                .ToArray();
         }
 
         protected virtual Renderer[] PickRenderers()
         {
             Renderer[] renderers = m_selectionPicker.Pick();
-            return renderers.Where(r => CanSelectObject(r.gameObject)).OrderBy(hit => GetDepth(hit.transform)).ToArray();
+            return renderers.Where(r => CanSelectObject(r.gameObject)).OrderBy(hit => GetDepth(hit.transform))
+                .ToArray();
         }
 
         public virtual void SelectGO(bool multiselect, bool allowUnselect)
@@ -1057,7 +971,7 @@ namespace Battlehub.RTHandles
                 return;
             }
 
-            if(m_boxSelection != null && m_boxSelection.IsThresholdPassed)
+            if (m_boxSelection != null && m_boxSelection.IsThresholdPassed)
             {
                 return;
             }
@@ -1112,7 +1026,8 @@ namespace Battlehub.RTHandles
                 hits = new RaycastHit[0];
             }
 
-            if (hits.Length != 1 || !(hits[0].collider is TerrainCollider) || !TrySelectRenderer(multiselect, allowUnselect))
+            if (hits.Length != 1 || !(hits[0].collider is TerrainCollider) ||
+                !TrySelectRenderer(multiselect, allowUnselect))
             {
                 SelectGO(multiselect, allowUnselect, hits, hit => hit.collider.gameObject);
             }
@@ -1130,6 +1045,7 @@ namespace Battlehub.RTHandles
             {
                 return false;
             }
+
             GameObject hitGO = GetNextGo(renderers, r => r.gameObject);
             if (CanSelectObject(hitGO))
             {
@@ -1142,6 +1058,7 @@ namespace Battlehub.RTHandles
                     }
                 }
             }
+
             return false;
         }
 
@@ -1186,14 +1103,15 @@ namespace Battlehub.RTHandles
         }
 
         private void SelectGO(bool multiselect, bool allowUnselect, GameObject hitGO)
-        {   
-            if(GetFilteredSelection(multiselect, allowUnselect, hitGO, out UnityObject[] selection))
+        {
+            if (GetFilteredSelection(multiselect, allowUnselect, hitGO, out UnityObject[] selection))
             {
                 UpdateSelection(multiselect, selection);
-            } 
+            }
         }
 
-        private bool GetFilteredSelection(bool multiselect, bool allowUnselect, GameObject hitGO, out UnityObject[] filteredSelection)
+        private bool GetFilteredSelection(bool multiselect, bool allowUnselect, GameObject hitGO,
+            out UnityObject[] filteredSelection)
         {
             if (multiselect)
             {
@@ -1248,7 +1166,7 @@ namespace Battlehub.RTHandles
             {
                 if (multiselect)
                 {
-                    if(Editor.Undo.Enabled)
+                    if (Editor.Undo.Enabled)
                     {
                         Editor.Undo.Select(Selection, selection, selection.FirstOrDefault());
                     }
@@ -1262,6 +1180,7 @@ namespace Battlehub.RTHandles
                     Selection.objects = selection;
                 }
             }
+
             RaiseSelectionChanged();
         }
 
@@ -1315,6 +1234,7 @@ namespace Battlehub.RTHandles
         }
 
         private Ray m_prevPointer;
+
         private int GetNextIndex<T>(IList<T> hits, Func<T, GameObject> getGameObject)
         {
             int index = -1;
@@ -1324,7 +1244,7 @@ namespace Battlehub.RTHandles
             }
 
             Ray pointer = Window.Pointer;
-            if(m_prevPointer.origin == pointer.origin && m_prevPointer.direction == pointer.direction)
+            if (m_prevPointer.origin == pointer.origin && m_prevPointer.direction == pointer.direction)
             {
                 if (Selection.activeGameObject != null)
                 {
@@ -1337,6 +1257,7 @@ namespace Battlehub.RTHandles
                     }
                 }
             }
+
             m_prevPointer = pointer;
 
             index++;
@@ -1368,7 +1289,7 @@ namespace Battlehub.RTHandles
             {
                 selected = RuntimeSelectionUtil.GetRoots(selected);
             }
-          
+
             if (SelectionChanging != null)
             {
                 RuntimeSelectionChangingArgs args = new RuntimeSelectionChangingArgs(selected);
@@ -1404,6 +1325,7 @@ namespace Battlehub.RTHandles
             {
                 SizeOfGrid = 0.01f;
             }
+
             position.x = Mathf.Round(position.x / SizeOfGrid) * SizeOfGrid;
             position.y = Mathf.Round(position.y / SizeOfGrid) * SizeOfGrid;
             position.z = Mathf.Round(position.z / SizeOfGrid) * SizeOfGrid;
@@ -1416,6 +1338,7 @@ namespace Battlehub.RTHandles
                 selection[i].transform.position += offset;
                 Editor.Undo.EndRecordTransform(selection[i].transform);
             }
+
             Editor.Undo.EndRecord();
 
             if (m_rectTool != null && Editor.Tools.Current == RuntimeTool.Rect)
@@ -1443,6 +1366,7 @@ namespace Battlehub.RTHandles
                 {
                     Selection.objects = selection;
                 }
+
                 RaiseSelectionChanged();
             }
         }
@@ -1464,6 +1388,7 @@ namespace Battlehub.RTHandles
                     m_positionHandle.gameObject.SetActive(false);
                 }
             }
+
             if (m_rotationHandle != null)
             {
                 if (hasSelection && Editor.Tools.Current == RuntimeTool.Rotate && IsRotationHandleEnabled)
@@ -1477,6 +1402,7 @@ namespace Battlehub.RTHandles
                     m_rotationHandle.gameObject.SetActive(false);
                 }
             }
+
             if (m_scaleHandle != null)
             {
                 if (hasSelection && Editor.Tools.Current == RuntimeTool.Scale && IsScaleHandleEnabled)
@@ -1490,6 +1416,7 @@ namespace Battlehub.RTHandles
                     m_scaleHandle.gameObject.SetActive(false);
                 }
             }
+
             if (m_rectTool != null)
             {
                 if (hasSelection && Editor.Tools.Current == RuntimeTool.Rect && IsRectToolEnabled)
@@ -1503,6 +1430,7 @@ namespace Battlehub.RTHandles
                     m_rectTool.gameObject.SetActive(false);
                 }
             }
+
             if (m_customHandle != null)
             {
                 if (hasSelection && Editor.Tools.Current == RuntimeTool.Custom)
@@ -1551,6 +1479,7 @@ namespace Battlehub.RTHandles
                 {
                     Selection.objects = filteredSelection;
                 }
+
                 RaiseSelectionChanged();
             }
         }
@@ -1635,18 +1564,22 @@ namespace Battlehub.RTHandles
             {
                 m_positionHandle.gameObject.SetActive(isActive);
             }
+
             if (m_rotationHandle != null)
             {
                 m_rotationHandle.gameObject.SetActive(isActive);
             }
+
             if (m_scaleHandle != null)
             {
                 m_scaleHandle.gameObject.SetActive(isActive);
             }
+
             if (m_rectTool != null)
             {
                 m_rectTool.gameObject.SetActive(isActive);
             }
+
             if (m_customHandle != null)
             {
                 m_customHandle.gameObject.SetActive(isActive);
@@ -1670,6 +1603,7 @@ namespace Battlehub.RTHandles
             {
                 return true;
             }
+
             return exposeToEditor.CanTransform;
         }
 
@@ -1680,22 +1614,22 @@ namespace Battlehub.RTHandles
                 return null;
             }
 
-            return Selection.gameObjects.Where(g => CanTransformObject(g)).Select(g => g.transform).OrderByDescending(g => Selection.activeTransform == g).ToArray();
+            return Selection.gameObjects.Where(g => CanTransformObject(g)).Select(g => g.transform)
+                .OrderByDescending(g => Selection.activeTransform == g).ToArray();
         }
 
 
         public virtual void Focus(FocusMode focusMode = FocusMode.Default)
         {
-
         }
 
         public virtual void Focus(Vector3 objPositon, float objSize)
         {
-
         }
 
 
         private bool m_wasUnitSnappingEnabled;
+
         private void OnBeforeDrag(BaseHandle handle)
         {
             if (IsGridEnabled)
@@ -1703,7 +1637,6 @@ namespace Battlehub.RTHandles
                 m_wasUnitSnappingEnabled = Editor.Tools.UnitSnapping;
                 Editor.Tools.UnitSnapping = true;
             }
-
         }
 
         private void OnDrop(BaseHandle handle)
@@ -1726,6 +1659,7 @@ namespace Battlehub.RTHandles
         {
             return GetHandleTargets();
         }
+
         #endregion
     }
 }

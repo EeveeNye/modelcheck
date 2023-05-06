@@ -10,29 +10,13 @@ namespace Battlehub.UIControls.MenuControl
     [Serializable]
     public class MenuItemValidationArgs
     {
-        public bool IsValid
-        {
-            get;
-            set;
-        }
+        public bool IsValid { get; set; }
 
-        public bool HasChildren
-        {
-            get;
-            set;
-        }
+        public bool HasChildren { get; set; }
 
-        public bool IsVisible
-        {
-            get;
-            set;
-        }
+        public bool IsVisible { get; set; }
 
-        public string Command
-        {
-            get;
-            private set;
-        }
+        public string Command { get; private set; }
 
         public MenuItemValidationArgs(string command, bool hasChildren)
         {
@@ -80,66 +64,63 @@ namespace Battlehub.UIControls.MenuControl
         public event EventHandler Opened;
         public event EventHandler Closed;
 
-        [SerializeField]
-        private MenuItemInfo[] m_items = null;
+        [SerializeField] private MenuItemInfo[] m_items = null;
+
         public MenuItemInfo[] Items
         {
             get { return m_items; }
-            set
-            {
-                SetMenuItems(value, true);
-            }
+            set { SetMenuItems(value, true); }
         }
 
         public void SetMenuItems(MenuItemInfo[] menuItems, bool databind = true)
         {
             m_items = menuItems;
-            if(databind)
+            if (databind)
             {
                 DataBind();
             }
-            
         }
 
-        [SerializeField, HideInInspector, Obsolete/*26.01.2021*/] 
+        [SerializeField, HideInInspector, Obsolete /*26.01.2021*/]
         private MenuItem m_menuItemPrefab = null;
 
-        [SerializeField]
-        private MenuItem[] m_menuItemPrefabs = null;
+        [SerializeField] private MenuItem[] m_menuItemPrefabs = null;
 
-        [SerializeField]
-        private RectTransform m_anchor = null;
+        [SerializeField] private RectTransform m_anchor = null;
+
         public RectTransform Anchor
         {
             get { return m_anchor; }
             set { m_anchor = value; }
         }
 
-        [SerializeField]
-        private Vector2 m_anchorOffset = Vector2.zero;
+        [SerializeField] private Vector2 m_anchorOffset = Vector2.zero;
+
         public Vector2 AnchorOffset
         {
             get { return m_anchorOffset; }
             set { m_anchorOffset = value; }
         }
-     
-        [SerializeField]
-        private Transform m_panel = null;
+
+        [SerializeField] private Transform m_panel = null;
 
         private Transform m_root;
+
         private Transform Root
         {
             get
             {
-                if(m_root == null)
+                if (m_root == null)
                 {
                     m_root = transform.parent;
                 }
+
                 return m_root;
             }
         }
 
         private int m_depth;
+
         public int Depth
         {
             get { return m_depth; }
@@ -147,12 +128,13 @@ namespace Battlehub.UIControls.MenuControl
         }
 
         private MenuItem m_child;
+
         public MenuItem Child
         {
             get { return m_child; }
             set
             {
-                if(m_child != null && m_child != value && m_child.Submenu != null)
+                if (m_child != null && m_child != value && m_child.Submenu != null)
                 {
                     MenuItem oldChild = m_child;
                     m_child = value;
@@ -163,7 +145,7 @@ namespace Battlehub.UIControls.MenuControl
                     m_child = value;
                 }
 
-                if(m_child != null)
+                if (m_child != null)
                 {
                     m_child.Select(true);
                 }
@@ -171,13 +153,11 @@ namespace Battlehub.UIControls.MenuControl
         }
 
         private MenuItem m_parent;
+
         public MenuItem Parent
         {
             get { return m_parent; }
-            set
-            {
-                m_parent = value;
-            }
+            set { m_parent = value; }
         }
 
         public int ActualItemsCount
@@ -190,11 +170,9 @@ namespace Battlehub.UIControls.MenuControl
             get { return gameObject.activeSelf; }
         }
 
-        [SerializeField]
-        private CanvasGroup m_canvasGroup = null;
+        [SerializeField] private CanvasGroup m_canvasGroup = null;
 
-        [SerializeField]
-        private float FadeInSpeed = 2;
+        [SerializeField] private float FadeInSpeed = 2;
 
         private bool m_skipUpdate;
 
@@ -213,10 +191,10 @@ namespace Battlehub.UIControls.MenuControl
             CopyPrefabs();
         }
 
-    
+
         private void OnDestroy()
         {
-            if(Closed != null)
+            if (Closed != null)
             {
                 Closed(this, EventArgs.Empty);
             }
@@ -226,7 +204,7 @@ namespace Battlehub.UIControls.MenuControl
         {
             if (m_menuItemPrefabs.Length == 0)
             {
-                #pragma warning disable CS0612
+#pragma warning disable CS0612
                 if (m_menuItemPrefab == null)
                 {
                     Debug.LogError("Add at least 1 MenuItem prefab to Menu Item Prefabs array");
@@ -235,7 +213,7 @@ namespace Battlehub.UIControls.MenuControl
                 {
                     m_menuItemPrefabs = new[] { m_menuItemPrefab };
                 }
-                #pragma warning restore CS0612
+#pragma warning restore CS0612
             }
         }
 
@@ -264,6 +242,7 @@ namespace Battlehub.UIControls.MenuControl
                         {
                             menuItemInfo.Text = pathParts[m_depth];
                         }
+
                         pathToItem[pathParts[m_depth]] = menuItemInfo;
                     }
                     else
@@ -289,6 +268,7 @@ namespace Battlehub.UIControls.MenuControl
                         {
                             menuItemInfo.Text = pathParts[m_depth + 1];
                         }
+
                         childrenList.Add(menuItemInfo);
                     }
                 }
@@ -298,7 +278,7 @@ namespace Battlehub.UIControls.MenuControl
             {
                 MenuItem menuItemPrefab = GetMenuItemPrefab(menuItemInfo);
                 MenuItem menuItem = Instantiate(menuItemPrefab, m_panel, false);
-                menuItem.name = "MenuItem";
+                menuItem.name = menuItemInfo.Path; //"MenuItem";
                 menuItem.Depth = Depth + 1;
                 menuItem.Root = Root;
 
@@ -318,6 +298,7 @@ namespace Battlehub.UIControls.MenuControl
             {
                 Destroy(child.gameObject);
             }
+
             m_panel.DetachChildren();
         }
 
@@ -339,15 +320,15 @@ namespace Battlehub.UIControls.MenuControl
                 lp.z = 0;
                 transform.localPosition = lp + (Vector3)m_anchorOffset;
             }
-            
+
             DataBind();
-            
+
             //if(m_anchor == null)
             {
                 Fit();
-            }   
-         
-            if(Opened != null)
+            }
+
+            if (Opened != null)
             {
                 Opened(this, EventArgs.Empty);
             }
@@ -358,13 +339,13 @@ namespace Battlehub.UIControls.MenuControl
             Clear();
             gameObject.SetActive(false);
 
-            if(Closed != null)
+            if (Closed != null)
             {
                 Closed(this, EventArgs.Empty);
             }
         }
 
-        
+
         private Vector2 CalculateMenuSize()
         {
             HashSet<string> rootPathHs = new HashSet<string>();
@@ -376,11 +357,12 @@ namespace Battlehub.UIControls.MenuControl
                 {
                     rootPath = rootPath.Split('/')[0];
                 }
-               
+
                 if (!rootPathHs.Add(rootPath))
                 {
                     continue;
                 }
+
                 MenuItem menuItemPrefab = GetMenuItemPrefab(m_items[i]);
                 RectTransform rt = menuItemPrefab.GetComponent<RectTransform>();
                 size.x = Mathf.Max(size.x, rt.rect.width);
@@ -395,14 +377,16 @@ namespace Battlehub.UIControls.MenuControl
             MenuItem menuItemPrefab = null;
 
             int prefabIndex = 0;
-            if(menuItemInfo != null)
+            if (menuItemInfo != null)
             {
                 prefabIndex = menuItemInfo.PrefabIndex;
             }
+
             if (0 <= prefabIndex && prefabIndex < m_menuItemPrefabs.Length)
             {
                 menuItemPrefab = m_menuItemPrefabs[prefabIndex];
             }
+
             if (menuItemPrefab == null)
             {
                 Debug.LogWarning("Using default menu item prefab");
@@ -421,7 +405,7 @@ namespace Battlehub.UIControls.MenuControl
             Vector2 size = CalculateMenuSize();
 
             float offset = 3;
-            if(m_anchor != null)
+            if (m_anchor != null)
             {
                 offset = 0;
             }
@@ -437,7 +421,7 @@ namespace Battlehub.UIControls.MenuControl
 
             if (position.y - size.y < topLeft.y)
             {
-                if(m_anchor != null)
+                if (m_anchor != null)
                 {
                     Vector3[] corners = new Vector3[4];
                     m_anchor.GetWorldCorners(corners);
@@ -460,26 +444,27 @@ namespace Battlehub.UIControls.MenuControl
 
         private void LateUpdate()
         {
-            if(m_skipUpdate)
+            if (m_skipUpdate)
             {
                 m_skipUpdate = false;
                 return;
             }
 
-            if(m_canvasGroup != null && m_canvasGroup.alpha < 1)
+            if (m_canvasGroup != null && m_canvasGroup.alpha < 1)
             {
                 m_canvasGroup.alpha += Time.deltaTime * FadeInSpeed;
             }
 
-            if(Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2) || Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2) ||
+                Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                if(m_child == null)
+                if (m_child == null)
                 {
                     MenuItem parentMenuItem = m_parent;
                     while (parentMenuItem != null && !parentMenuItem.IsPointerOver)
                     {
                         Menu parentMenu = parentMenuItem.GetComponentInParent<Menu>();
-                        if(parentMenu == null)
+                        if (parentMenu == null)
                         {
                             Destroy(gameObject);
                             return;
@@ -501,8 +486,8 @@ namespace Battlehub.UIControls.MenuControl
                             parentMenu.Close();
                         }
                     }
-                    
-                    if(m_parent == null)
+
+                    if (m_parent == null)
                     {
                         Close();
                     }

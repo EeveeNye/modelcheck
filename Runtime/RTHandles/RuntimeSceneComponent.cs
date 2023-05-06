@@ -904,7 +904,7 @@ namespace Battlehub.RTHandles
                     Vector3 newPosition = Vector3.Lerp(
                         camTransform.position,
                         m_targetPosition,
-                        m_freeMovementSmoothSpeed * Time.deltaTime);
+                        20f * Time.deltaTime);
 
                     camTransform.position = newPosition;
                 }
